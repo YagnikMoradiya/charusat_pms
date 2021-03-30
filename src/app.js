@@ -9,9 +9,13 @@ const studentRouter = require("../routes/student");
 const companyRouter = require("../routes/company");
 const adminRouter = require("../routes/admin");
 const generalRouter = require("../routes/general");
+const formRouter = require("../routes/form");
 
 module.exports = () => {
   const app = express();
+
+  app.set("view engine", "ejs");
+
   app.use(morgan("tiny"));
   app.use(compression());
   app.use(helmet());
@@ -27,6 +31,7 @@ module.exports = () => {
   app.use("/companies", companyRouter);
   app.use("/admin", adminRouter);
   app.use("/general", generalRouter);
+  app.use("/form", formRouter);
 
   app.use(middlewares.notFound);
   app.use(middlewares.errorHandler);

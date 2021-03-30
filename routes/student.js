@@ -15,7 +15,6 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  console.log("Hello");
   const student = await studentRepo.getStudent();
   if (student.length > 0) {
     res.json({

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
+    <style>
+        * {
+        padding: 0px;
+        margin: 0px;
+        }
+
+        .form {
+        max-width: 800px;
+        margin: auto;
+        padding: 10px;
+        border: 1px solid #eee;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .header {
+        text-align: left;
+        }
+
+        td {
+        padding: 0px;
+        margin: 0px;
+        }
+
+        img {
+        width: 200px;
+        height: 200px;
+        }
+
+        #heading {
+        color: #1f387e;
+        font-size: 2em;
+        font-weight: bold;
+        }
+
+        #header__small {
+        color: red;
+        font-size: 0.8em;
+        font-weight: 600;
+        font-family: "Source Sans Pro", sans-serif;
+        }
+
+        .header__address {
+        font-size: 1em;
+        font-weight: 600;
+        font-family: "Source Sans Pro", sans-serif;
+        }
+
+        .body {
+        max-width: 600px;
+        margin: 50px auto;
+        }
+
+        #body__first {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0px;
+        }
+
+        #body__second {
+        padding: 10px 0px;
+        }
+
+        #body__subject {
+        text-align: center;
+        padding: 20px 0px;
+        font-size: 18px;
+        }
+
+        .body__greeting {
+        padding: 20px 0px;
+        }
+
+        .body__content {
+        text-indent: 50px;
+        padding: 10px 0px;
+        text-align: justify;
+        }
+
+    </style>
+    <title>NOC</title>
+</head>
+<body>
+    <div class="form">
+        <div class="header">
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td rowspan="4"><img src="depstar.png" alt="depstar-logo"></td>
+                    <td id="heading">
+                        Devang Patel Institute of <br> Advance Technology and Research
+                    </td>
+                </tr>
+                <tr>
+                    <td id="header__small">
+                       (A Constitute Institute of CHARUSAT)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header__address">
+                        CHARUSAT Campus, Changa - 388 421, Off Nadiad - Petlad Highway, (Gujarat) India
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header__address">
+                        Ph # +91-2697-265121 | Fax # +91-2697-247100 | Web : www.charusat.ac.in
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <hr>
+        <div class="body">
+            <div id="body__first">
+                <p id="body__left">
+                    DEPSTAR/ <%=student.short_dept%> /PRJ/<%= student.id%>
+                </p>
+                <p id="body__right">
+                    Date: <%=student.date%>
+                </p>
+            </div>
+            <p id="body__second">
+                To, <br> Manager HR <br> HPC Sphere <br>Delhi
+            </p>
+            <p id="body__subject">Subject: <b>NOC for Final Year Training at vour Organization</b></p>
+            <p class="body__greeting">Dear Sir/Madam, </p>
+            <p class="body__content">
+                Devang Patel Institute of Advance Technology and Research is a degree
+                engineering college affiliated to Charotar University of Science & Technology
+                [CHARUSAT]. We run full-time degree programs in Computer Engineering, Computer
+                Science and Engineering and Information Technology.
+            <p class="body__content">
+                The students of semester VIII of Department of <b> <%=student.full_dept%> </b> of our
+                Institute are required to undergo a full-time final semester project as a part of their academic
+                course. Each project needs to be from Industry/Research Organization/Govt. Organization.
+                Student would work under the guidance of the External Guide where he is doing internship
+                and he has to report Internal guide as well every week.
+            </p>
+            <p class="body__content">
+                This is to certify that the Institute does not have any objection, if our student <b> <%=student.name%> (<%=student.id%>) </b> of <b> 8th Semester - <%=student.full_dept%> </b> Department
+                undergoes the training/project work in your Organization. For the smooth progress of Project
+                Training, it should be immediately brought to the notice of the Internal Guide and
+                undersigned person for any issues., We ensure you of the best behavior and discipline of our
+                student coming in your organization. For more information, Annexure-I (Details of Project) is
+                attached with NOC.
+                
+            </p>
+            <p class="body__greeting">Thanks and Regards <br> <br> <br>
+                Training & Placement Representative <br>
+                Devang Patel Institute of Advance Technology and Research,<br>
+                Charotar University of Science & Technology [CHARUSAT}. <br>
+                Email: tnpdepstar@charusat.edu.in
+            </p>
+        </div>
+    </div>
+    
+</body>
+</html>

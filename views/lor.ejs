@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .form {
+            max-width: 800px;
+            margin: auto;
+            padding: 10px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .body {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .first {
+            display: flex;
+            justify-content: space-between;
+            margin: 60px 0px;
+            font-size: 12px;
+        }
+
+        h3 {
+            text-align: center;
+            padding: 20px 0px;
+        }
+
+        .body__content {
+            text-align: justify;
+            text-indent: 50px;
+        }
+
+        .body__text {
+            text-align: justify;
+        }
+
+    </style>
+    <title>LOR</title>
+</head>
+<body>
+    <div class="form">
+        <div class="body">
+            <div class="first">
+                <p>DEPSTAR/2020/<%=student.id%></p>
+                <p>Date: <%=student.date%></p>
+            </div>
+            <h3>TO WHOM SO EVER CONSERNED</h3>
+            <p class="body__text"><b>Devang Patel Institute of Advance Technology and Research</b> is a degree engineering college affiliated to <b>Charotar University of Science & Technology [CHARUSAT]</b> . We run full-time degree programs in Computer Engineering, Computer Science and Engineering and Information Technology.</p>
+            <p class="body__content">The student of semester VII of <b><%=student.full_dept%></b> Department of our Institute may undergo Final Year Internship during their 8th semester to get more exposure of industry culture, standards and current market demand.</p>
+            <p class="body__content" id="third"><b><%=student.name%></b> is our regular and disciplined student of <b><%=student.full_dept%></b> Department and interested in doing his Final Year Internship at your organization. As your organization has the required skill set and infrastructure to have such project, we request you to kindly accommodate our student.</p>
+            <br><br>
+            <p id="duration"><b><u>Duration:</u></b></p>
+            <p class="body__text">The tenure of internship should be around 4-6 months (tentatively from <%=student.start%> to <%=student.end%>) after the completion of their University exams. This Final Year Internship is a part of their curriculum and students' will be awarded credits for it in 8th semester. Student can work at your organization 6 days (7 days, if Sunday working) per week. </p>
+            <br>
+            <p id="reporting"><b><u>Reporting at College / Organization: </u></b></p>
+            <p class="body__text">It is expected that students shall report one day per week. Internal faculty from institute will monitor the project work.</p>
+            <br> 
+            <p>We look forward to your favorable response.</p>
+            <br>
+            <p class="body__greeting">Thanking you,<br>
+                Yours Truely,<br>
+                <br> <br> <br>
+                Training & Placement Representative <br>
+                Devang Patel Institute of Advance Technology and Research,<br>
+                Charotar University of Science & Technology [CHARUSAT}. <br>
+                Email: tnpdepstar@charusat.edu.in
+            </p>
+        </div>
+        
+    </div>
+</body>
+</html>
