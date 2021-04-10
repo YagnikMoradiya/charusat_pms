@@ -28,10 +28,27 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const student = await studentRepo.getStudentByID(req.params.id);
+  const academic = await studentRepo.getAcademic(student.id);
+  const exam_detail = await studentRepo.getExamdetail(student.id);
+  const alumina = await studentRepo.getAluminaByID(student.id);
+  const achivement = await studentRepo.getAchivement(student.id);
+  const skill = await studentRepo.getSkill(student.id);
+  const project = await studentRepo.getProject(student.id);
+
+  const fullDetail = {
+    student,
+    academic,
+    exam_detail,
+    alumina,
+    achivement,
+    skill,
+    project,
+  };
+
   if (student) {
     res.json({
       status: 200,
-      data: student,
+      data: fullDetail,
     });
   } else {
     res.sendStatus(404);

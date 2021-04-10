@@ -67,13 +67,13 @@ class studentRepo {
   static getStudent = async () => {
     try {
       const { rows } = await pool.query(
-        `SELECT general_detail.id, general_detail.name, enroll_id, email, phone, departments.name AS departments, institutes.name AS institutes, bio, avatar, current_status, ufm, disciplinary_action, state.name AS state, country.name AS country, city, addressline, zipcode, created_at, updated_at, is_hired, admission_year,
+        `SELECT g.id, g.name, enroll_id, email, phone, d.name AS departments, institutes.name AS institutes, bio, avatar, current_status, ufm, disciplinary_action, state.name AS state, country.name AS country, city, addressline, zipcode, created_at, updated_at, is_hired, admission_year,
         graduation_year
-              FROM general_detail 
-              INNER JOIN departments ON general_detail.dept_id = departments.id
-              INNER JOIN state ON general_detail.state_id = state.id
-              INNER JOIN country ON state.country_id = country.id
-              INNER JOIN institutes ON departments.institute_id = institutes.id
+              FROM general_detail g
+              LEFT JOIN departments d ON general_detail.dept_id = departments.id
+              LEFT JOIN state s ON general_detail.state_id = state.id
+              LEFT JOIN country c ON state.country_id = country.id
+              LEFT JOIN institutes i ON departments.institute_id = institutes.id
               WHERE is_deleted = FALSE
               ORDER BY id ASC;`
       );
@@ -154,14 +154,12 @@ class studentRepo {
   static getStudentByID = async (id) => {
     try {
       const { rows } = await pool.query(
-        `SELECT general_detail.name, enroll_id, email, phone, departments.name AS departments, institutes.name AS institutes, bio, avatar, current_status, ufm, disciplinary_action, state.name AS state, country.name AS country, city, addressline, zipcode, created_at, updated_at, is_hired, is_deleted, admission_year,
+        `SELECT g.id, g.name, enroll_id, email, phone, d.name AS departments, i.name AS institutes, bio, avatar, current_status, ufm, disciplinary_action, created_at, updated_at, is_hired, is_deleted, admission_year,
         graduation_year
-              FROM general_detail 
-              INNER JOIN departments ON general_detail.dept_id = departments.id
-              INNER JOIN state ON general_detail.state_id = state.id
-              INNER JOIN country ON state.country_id = country.id
-              INNER JOIN institutes ON departments.institute_id = institutes.id
-              WHERE general_detail.id = $1 AND is_deleted = FALSE ;`,
+          FROM general_detail g
+          INNER JOIN departments d ON g.dept_id = d.id
+          INNER JOIN institutes i ON d.institute_id = i.id
+          WHERE g.enroll_id = $1 AND is_deleted = FALSE ;`,
         [id]
       );
       return rows[0];
@@ -486,7 +484,7 @@ class studentRepo {
   static getAchivement = async (id) => {
     try {
       const { rows } = await pool.query(
-        `SELECT achivement.id, general_detail.id AS enroll_id, achivement_name, achivement_detail, certificate_link, github_link, linkedin_link
+        `SELECT achivement.id, achivement_name, achivement_detail, certificate_link, github_link, linkedin_link
               FROM achivement
               INNER JOIN general_detail ON achivement.stu_id = general_detail.id
               WHERE achivement.stu_id = $1;`,
