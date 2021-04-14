@@ -12,4 +12,9 @@ router.post("/", async (req, res) => {
   res.send(admin);
 });
 
+router.post("/email", async (req, res) => {
+  const admin = await adminRepo.getByEmail(req.params.email);
+  res.send(admin);
+});
+
 module.exports = router;

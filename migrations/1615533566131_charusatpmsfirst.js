@@ -191,7 +191,6 @@ exports.up = (pgm) => {
             stu_id INTEGER NOT NULL UNIQUE,
             admin_id INTEGER NOT NULL,
             is_confirm BOOLEAN DEFAULT FALSE,
-            faculty_name VARCHAR(100) NOT NULL UNIQUE,
             requested_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
             FOREIGN KEY(stu_id) REFERENCES general_detail(id) ON DELETE CASCADE,
             FOREIGN KEY(admin_id) REFERENCES admin(id) ON DELETE CASCADE

@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const compression = require("compression");
+const cors = require("cors");
 const helmet = require("helmet");
 
 const middlewares = require("../src/middleware");
@@ -16,6 +17,7 @@ module.exports = () => {
 
   app.set("view engine", "ejs");
 
+  app.use(cors());
   app.use(morgan("tiny"));
   app.use(compression());
   app.use(helmet());

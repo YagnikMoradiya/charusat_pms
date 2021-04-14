@@ -168,6 +168,23 @@ class studentRepo {
     }
   };
 
+  static getStudentByEmail = async (email) => {
+    try {
+      const { rows } = await pool.query(
+        `SELECT g.id, g.name, enroll_id, email, phone, d.name AS departments, i.name AS institutes, bio, avatar, current_status, ufm, disciplinary_action, created_at, updated_at, is_hired, is_deleted, admission_year,
+        graduation_year
+          FROM general_detail g
+          INNER JOIN departments d ON g.dept_id = d.id
+          INNER JOIN institutes i ON d.institute_id = i.id
+          WHERE g.email = $1 AND is_deleted = FALSE ;`,
+        [email]
+      );
+      return rows[0];
+    } catch (error) {
+      return error;
+    }
+  };
+
   static deleteStudent = async (id) => {
     try {
       const { rows } = await pool.query(

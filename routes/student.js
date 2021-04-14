@@ -17,10 +17,16 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   const student = await studentRepo.getStudent();
   if (student.length > 0) {
-    res.json({
-      status: 200,
-      data: student,
-    });
+    res.send(student);
+  } else {
+    res.sendStatus(404);
+  }
+});
+
+router.get("/search/:email", async (req, res) => {
+  const student = await studentRepo.getStudentByEmail(req.params.email);
+  if (student) {
+    res.send(student);
   } else {
     res.sendStatus(404);
   }
