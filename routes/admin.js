@@ -2,9 +2,10 @@ const express = require("express");
 const adminRepo = require("../repos/admin-repo");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const admin = await adminRepo.get();
-  res.send(admin);
+router.get("/:id", async (req, res) => {
+  const admin = await adminRepo.get(req.params.id);
+  if (admin) res.send(admin);
+  else res.sendStatus(404);
 });
 
 router.post("/", async (req, res) => {

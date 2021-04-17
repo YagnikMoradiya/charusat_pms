@@ -2,12 +2,22 @@ const pool = require("../src/pool");
 
 class companyRepo {
   static add = async (req) => {
-    const { name, email, sector, bio, avatar, address, city, state_id } = req;
+    const {
+      id,
+      name,
+      email,
+      sector,
+      bio,
+      avatar,
+      address,
+      city,
+      state_id,
+    } = req;
     try {
       const { rows } = await pool.query(
-        `INSERT INTO company(name, email, sector, bio, avatar, address, city, state_id) VALUES
-                ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`,
-        [name, email, sector, bio, avatar, address, city, state_id]
+        `INSERT INTO company(id, name, email, sector, bio, avatar, address, city, state_id) VALUES
+                ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;`,
+        [id, name, email, sector, bio, avatar, address, city, state_id]
       );
       return rows[0];
     } catch (error) {

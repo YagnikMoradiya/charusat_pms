@@ -1,29 +1,31 @@
 const pool = require("../src/pool");
 
 class adminRepo {
-  static add = async (req) => {
-    const { name, email, phone, avatar, dept_id } = req;
+  static get = async (id) => {
     try {
-      const { rows } = pool.query(
-        `INSERT INTO admin(name, email, phone, avatar, dept_id) VALUES 
-                ($1, $2, $3, $4, $5) RETURNING *;`,
-        [name, email, phone, avatar, dept_id]
+      const { rows } = await pool.query(
+        `SELECT admin.name, email, phone, avatar, departments.name AS department, institutes.name as institute
+        FROM admin
+        INNER JOIN departments ON  admin.dept_id = departments.id
+        INNER JOIN institutes ON  institutes.id = departments.institute_id
+        WHERE admin.id = $1;`,
+        [id]
       );
-      return rows;
+      return rows[0];
     } catch (error) {
       return error;
     }
   };
 
-  static get = async () => {
+  static add = async (req) => {
+    const { id, name, email, phone, avatar, dept_id } = req;
     try {
-      const { rows } = pool.query(
-        `SELECT admin.name, email, phone, avatar, departments.name AS department, institutes.name as institute
-        FROM admin
-        INNER JOIN departments ON  admin.dept_id = departments.id
-        INNER JOIN institutes ON  institutes.id = departments.institute_id;`
+      const { rows } = await pool.query(
+        `INSERT INTO admin(id, name, email, phone, avatar, dept_id) VALUES 
+                ($1, $2, $3, $4, $5, $6) RETURNING *;`,
+        [id, name, email, phone, avatar, dept_id]
       );
-      return rows;
+      return rows[0];
     } catch (error) {
       return error;
     }
@@ -31,7 +33,7 @@ class adminRepo {
 
   static getByEmail = async (email) => {
     try {
-      const { rows } = pool.query(
+      const { rows } = await pool.query(
         `SELECT admin.name, email, phone, avatar, departments.name AS department, institutes.name as institute
         FROM admin
         INNER JOIN departments ON  admin.dept_id = departments.id

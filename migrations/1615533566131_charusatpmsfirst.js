@@ -34,7 +34,7 @@ exports.up = (pgm) => {
         CREATE TYPE status AS ENUM ('student', 'alumina');
 
         CREATE TABLE general_detail (
-            id SERIAL PRIMARY KEY,
+            id VARCHAR(128) PRIMARY KEY,
             name VARCHAR(150) NOT NULL,
             enroll_id VARCHAR(15) NOT NULL UNIQUE,
             email VARCHAR(60) NOT NULL,
@@ -60,8 +60,7 @@ exports.up = (pgm) => {
         );
 
         CREATE TABLE academic (
-            id SERIAL PRIMARY KEY,
-            stu_id INTEGER NOT NULL UNIQUE,
+            stu_id VARCHAR(128) PRIMARY KEY,
             sgpa_1 NUMERIC(4, 2),
             sgpa_2 NUMERIC(4, 2),
             sgpa_3 NUMERIC(4, 2),
@@ -80,8 +79,7 @@ exports.up = (pgm) => {
         CREATE TYPE profile AS ENUM ('job', 'entrepreneur', 'highereducation');
 
         CREATE TABLE alumina_detail (
-            id SERIAL PRIMARY KEY,
-            stu_id INTEGER NOT NULL UNIQUE,
+            stu_id VARCHAR(128) PRIMARY KEY,
             current_profile profile NOT NULL,
             position VARCHAR(50) NOT NULL,
             organization_name VARCHAR(100) NOT NULL,
@@ -94,7 +92,7 @@ exports.up = (pgm) => {
 
         CREATE TABLE exam_detail (
             id SERIAL PRIMARY KEY,
-            stu_id INTEGER NOT NULL,
+            stu_id VARCHAR(128) NOT NULL,
             exam_name VARCHAR(100) NOT NULL,
             exam_status e_status NOT NULL,
             result NUMERIC(4, 2),
@@ -103,8 +101,7 @@ exports.up = (pgm) => {
         );
 
         CREATE TABLE achivement (
-            id SERIAL PRIMARY KEY,
-            stu_id INTEGER NOT NULL UNIQUE,
+            stu_id VARCHAR(128) PRIMARY KEY,
             achivement_name VARCHAR(100) NOT NULL,
             achivement_detail VARCHAR(400) NOT NULL,
             certificate_link VARCHAR(300),
@@ -115,7 +112,7 @@ exports.up = (pgm) => {
 
         CREATE TABLE projects (
             id SERIAL PRIMARY KEY,
-            stu_id INTEGER NOT NULL,
+            stu_id VARCHAR(128) NOT NULL,
             project_name VARCHAR(50) NOT NULL,
             description VARCHAR(400) NOT NULL,
             project_link VARCHAR(300),
@@ -123,8 +120,7 @@ exports.up = (pgm) => {
         );
 
         CREATE TABLE skills (
-            id SERIAL PRIMARY KEY,
-            stu_id INTEGER NOT NULL UNIQUE,
+            stu_id VARCHAR(128) PRIMARY KEY,
             skill_1 VARCHAR(50),
             skill_2 VARCHAR(50),
             skill_3 VARCHAR(50),
@@ -132,7 +128,7 @@ exports.up = (pgm) => {
         );
 
         CREATE TABLE company (
-            id SERIAL PRIMARY KEY,
+            id VARCHAR(128) PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             email VARCHAR(50) NOT NULL,
             sector VARCHAR(50) NOT NULL,
@@ -149,7 +145,7 @@ exports.up = (pgm) => {
             id SERIAL PRIMARY KEY,
             drive_date TIMESTAMP,
             drive_detail TEXT NOT NULL,
-            cmp_id INTEGER NOT NULL,
+            cmp_id VARCHAR(128) NOT NULL,
             created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(cmp_id) REFERENCES company(id) ON DELETE CASCADE
@@ -157,7 +153,7 @@ exports.up = (pgm) => {
 
         CREATE TABLE stu_applies (
             id SERIAL PRIMARY KEY,
-            stu_id INTEGER NOT NULL,
+            stu_id VARCHAR(128) NOT NULL,
             drive_id INTEGER NOT NULL,
             applied_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(stu_id) REFERENCES general_detail(id) ON DELETE CASCADE,
@@ -166,7 +162,7 @@ exports.up = (pgm) => {
         );
 
         CREATE TABLE admin (
-            id SERIAL PRIMARY KEY,
+            id VARCHAR(128) PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             email VARCHAR(50) NOT NULL,
             phone VARCHAR(15) NOT NULL,
@@ -177,8 +173,8 @@ exports.up = (pgm) => {
 
         CREATE TABLE hired (
             id SERIAL PRIMARY KEY,
-            cmp_id INTEGER NOT NULL,
-            stu_id INTEGER NOT NULL,
+            cmp_id VARCHAR(128) NOT NULL,
+            stu_id VARCHAR(128) NOT NULL,
             dept_id INTEGER NOT NULL,
             hired_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(cmp_id) REFERENCES company(id) ON DELETE CASCADE,
@@ -188,8 +184,8 @@ exports.up = (pgm) => {
 
         CREATE TABLE requests (
             id SERIAL PRIMARY KEY,
-            stu_id INTEGER NOT NULL UNIQUE,
-            admin_id INTEGER NOT NULL,
+            stu_id VARCHAR(128) NOT NULL UNIQUE,
+            admin_id VARCHAR(128) NOT NULL,
             is_confirm BOOLEAN DEFAULT FALSE,
             requested_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
             FOREIGN KEY(stu_id) REFERENCES general_detail(id) ON DELETE CASCADE,

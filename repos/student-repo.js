@@ -3,6 +3,7 @@ const pool = require("../src/pool");
 class studentRepo {
   static add = async (req) => {
     const {
+      id,
       name,
       enroll_id,
       email,
@@ -22,7 +23,7 @@ class studentRepo {
     } = req;
     try {
       const { rows } = await pool.query(
-        `INSERT INTO general_detail(name,
+        `INSERT INTO general_detail(id, name,
           enroll_id,
           email,
           phone,
@@ -38,8 +39,9 @@ class studentRepo {
           zipcode,
           admission_year,
           graduation_year) VALUES
-                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) RETURNING *;`,
+                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING *;`,
         [
+          id,
           name,
           enroll_id,
           email,
@@ -67,15 +69,15 @@ class studentRepo {
   static getStudent = async () => {
     try {
       const { rows } = await pool.query(
-        `SELECT g.id, g.name, enroll_id, email, phone, d.name AS departments, institutes.name AS institutes, bio, avatar, current_status, ufm, disciplinary_action, state.name AS state, country.name AS country, city, addressline, zipcode, created_at, updated_at, is_hired, admission_year,
+        `SELECT general_detail.id, general_detail.name, enroll_id, email, phone, departments.name AS departments, institutes.name AS institutes, bio, avatar, current_status, ufm, disciplinary_action, state.name AS state, country.name AS country, city, addressline, zipcode, created_at, updated_at, is_hired, admission_year,
         graduation_year
-              FROM general_detail g
-              LEFT JOIN departments d ON general_detail.dept_id = departments.id
-              LEFT JOIN state s ON general_detail.state_id = state.id
-              LEFT JOIN country c ON state.country_id = country.id
-              LEFT JOIN institutes i ON departments.institute_id = institutes.id
-              WHERE is_deleted = FALSE
-              ORDER BY id ASC;`
+          FROM general_detail
+          LEFT JOIN departments ON general_detail.dept_id = departments.id
+          LEFT JOIN state ON general_detail.state_id = state.id
+          LEFT JOIN country ON state.country_id = country.id
+          LEFT JOIN institutes ON departments.institute_id = institutes.id
+          WHERE is_deleted = FALSE
+          ORDER BY id ASC;`
       );
       return rows;
     } catch (error) {
@@ -230,7 +232,7 @@ class studentRepo {
   static getAluminaByID = async (id) => {
     try {
       const { rows } = await pool.query(
-        `SELECT alumina_detail.id, general_detail.name AS stu_name, current_profile, position, organization_name, salary, is_firstjob
+        `SELECT alumina_detail.stu_id, general_detail.name AS stu_name, current_profile, position, organization_name, salary, is_firstjob
         FROM alumina_detail
         INNER JOIN general_detail ON alumina_detail.stu_id = general_detail.id
         WHERE general_detail.id = $1 AND general_detail.is_deleted = FALSE;`,
@@ -379,7 +381,7 @@ class studentRepo {
   static getAcademic = async (id) => {
     try {
       const { rows } = await pool.query(
-        `SELECT academic.id, sgpa_1, sgpa_2, sgpa_3, sgpa_4, sgpa_5, sgpa_6, sgpa_7, sgpa_8, cgpa, ssc, hsc, backlogs
+        `SELECT sgpa_1, sgpa_2, sgpa_3, sgpa_4, sgpa_5, sgpa_6, sgpa_7, sgpa_8, cgpa, ssc, hsc, backlogs
             FROM academic 
             INNER JOIN general_detail ON academic.stu_id = general_detail.id
             WHERE general_detail.id = $1 AND general_detail.is_deleted = FALSE;`,
@@ -501,7 +503,7 @@ class studentRepo {
   static getAchivement = async (id) => {
     try {
       const { rows } = await pool.query(
-        `SELECT achivement.id, achivement_name, achivement_detail, certificate_link, github_link, linkedin_link
+        `SELECT achivement_name, achivement_detail, certificate_link, github_link, linkedin_link
               FROM achivement
               INNER JOIN general_detail ON achivement.stu_id = general_detail.id
               WHERE achivement.stu_id = $1;`,
@@ -547,7 +549,7 @@ class studentRepo {
   static getSkill = async (id) => {
     try {
       const { rows } = await pool.query(
-        `SELECT skills.id, skill_1, skill_2, skill_3
+        `SELECT skill_1, skill_2, skill_3
               FROM skills
               INNER JOIN general_detail ON skills.stu_id = general_detail.id
               WHERE skills.stu_id = $1;`,
